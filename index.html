@@ -7,7 +7,9 @@
   <meta name="description" content="Kooltek provides aircon cleaning, repair, installation, and refrigeration services. Book a technician online in minutes." />
   <meta property="og:title" content="Kooltek | Aircon & Refrigeration Services" />
   <meta property="og:description" content="Aircon cleaning, repair, installation, and refrigeration services. Book online." />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❄️</text></svg>" />
+  <link rel="icon" type="image/png" href="img/favicon.png" />
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+  <meta property="og:image" content="https://kooltek-ph.github.io/img/photos/tech-split-type-service.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
@@ -18,6 +20,7 @@
       <a href="index.html" class="brand"><img src="img/kooltek-wordmark.png" alt="Kooltek" class="brand-logo" /></a>
       <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
       <nav class="nav-links">
+        <a href="#about">About</a>
         <a href="#services">Services</a>
         <a href="#how">How it works</a>
         <a href="#contact">Contact</a>
@@ -39,14 +42,27 @@
             <a href="#contact" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,.6)">Contact us</a>
           </div>
         </div>
-        <div class="hero-card">
-          <h3>Why Kooltek</h3>
-          <ul>
-            <li>✅ <span>Trained, experienced technicians</span></li>
-            <li>✅ <span>All major brands and unit types</span></li>
-            <li>✅ <span>Clear pricing before we start</span></li>
-            <li>✅ <span>Homes, offices, shops, and restaurants</span></li>
-            <li>✅ <span>Track your booking online</span></li>
+        <div class="hero-photo">
+          <img src="img/photos/tech-split-type-service.jpg" alt="Kooltek technician servicing a split-type aircon" width="700" height="700" />
+          <div class="hero-badge"><img src="img/favicon.png" alt="" width="40" height="40" /><div><strong>Kooltek Philippines</strong><span>Aircon &amp; Refrigeration Experts</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container about-grid">
+        <div class="about-photo"><img src="img/photos/tech-filter-cleaning.jpg" alt="Kooltek technician cleaning an aircon filter" width="800" height="600" loading="lazy" /></div>
+        <div>
+          <img src="img/kooltek-logo.png" alt="Kooltek Philippines Inc." class="about-logo" width="150" height="140" loading="lazy" />
+          <h2>Your trusted aircon &amp; refrigeration partner</h2>
+          <p class="muted">Kooltek Philippines Inc. keeps homes and businesses cool with dependable cleaning, repair, installation, and maintenance. Every job comes with a written Job Order and a clear billing statement, so you always know what was done and what you're paying for.</p>
+          <ul class="why">
+            <li>✅ Trained, experienced technicians</li>
+            <li>✅ All major brands and unit types</li>
+            <li>✅ Clear pricing before we start</li>
+            <li>✅ 7-day warranty on cleaning, 30-day on repairs</li>
+            <li>✅ Homes, offices, shops, and restaurants</li>
+            <li>✅ Book and track your job online</li>
           </ul>
         </div>
       </div>
@@ -84,7 +100,7 @@
           <div class="step"><div class="num">3</div><h3>We confirm</h3><p>Our team reviews it and confirms your schedule and quote.</p></div>
           <div class="step"><div class="num">4</div><h3>Track &amp; done</h3><p>Follow the status online until the job is completed.</p></div>
         </div>
-        <div style="margin-top:56px" class="cta-band">
+        <div style="margin-top:56px" class="cta-band cta-photo">
           <div>
             <h2>Need a technician?</h2>
             <p>Create a job request now and we'll get back to you to confirm.</p>
@@ -127,7 +143,7 @@
 
   <footer class="site-footer">
     <div class="container">
-      <div>© <span id="yr"></span> Kooltek Philippines Inc. All rights reserved.</div>
+      <div class="foot-brand"><img src="img/kooltek-wordmark.png" alt="Kooltek" width="140" height="32" /><span>© <span id="yr"></span> Kooltek Philippines Inc. All rights reserved.</span></div>
       <div><a href="portal.html">Customer portal</a></div>
     </div>
   </footer>
