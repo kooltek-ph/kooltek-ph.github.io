@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Billing Statement | Kooltek</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/print.css" />
+</head>
+<body>
+  <div class="toolbar">
+    <span id="tb-label">Billing Statement</span>
+    <button onclick="window.print()">🖨 Print / Save as PDF</button>
+    <a class="alt" href="portal.html" id="back">← Back to portal</a>
+  </div>
+  <div id="out"><div class="msg">Loading…</div></div>
+  <script type="module" src="js/billing.js"></script>
+</body>
+</html>

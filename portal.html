@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer Portal | Kooltek</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❄️</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="index.html" class="brand"><img src="img/kooltek-wordmark.png" alt="Kooltek" class="brand-logo" /></a>
+      <nav style="display:flex;gap:10px;align-items:center">
+        <a href="index.html" class="btn btn-ghost btn-sm">← Home</a>
+        <button id="btn-logout" class="btn btn-outline btn-sm hidden">Log out</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="portal-main">
+    <div class="container">
+      <div id="demo-banner" class="alert info hidden" style="margin-bottom:20px">
+        <strong>Demo mode:</strong> accounts and requests are stored only in this browser. Connect Firebase in <code>js/firebase-config.js</code> to go live.
+        Sign up as <code>admin@kooltek.demo</code> to preview the admin view.
+      </div>
+
+      <div id="loading" class="empty">Loading…</div>
+
+      <!-- AUTH -->
+      <div id="view-auth" class="auth-wrap hidden">
+        <div class="card">
+          <h2 style="text-align:center">Kooltek Customer Portal</h2>
+          <p class="hint" style="text-align:center;margin-top:-8px">Log in to book a service and track your job requests.</p>
+          <div class="tabs">
+            <button id="tab-login" class="active" type="button">Log in</button>
+            <button id="tab-signup" type="button">Sign up</button>
+          </div>
+          <div id="auth-msg" class="alert hidden"></div>
+
+          <form id="form-login" class="stack">
+            <div><label for="li-email">Email</label><input id="li-email" type="email" autocomplete="email" required /></div>
+            <div><label for="li-pass">Password</label><input id="li-pass" type="password" autocomplete="current-password" required /></div>
+            <button class="btn btn-primary" style="width:100%" type="submit">Log in</button>
+            <div style="text-align:center"><a href="#" id="link-reset" class="hint">Forgot password?</a></div>
+          </form>
+
+          <form id="form-signup" class="stack hidden">
+            <div><label for="su-name">Full name</label><input id="su-name" autocomplete="name" required /></div>
+            <div><label for="su-email">Email</label><input id="su-email" type="email" autocomplete="email" required /></div>
+            <div><label for="su-pass">Password</label><input id="su-pass" type="password" minlength="6" autocomplete="new-password" required /><div class="hint">At least 6 characters.</div></div>
+            <button class="btn btn-primary" style="width:100%" type="submit">Create account</button>
+          </form>
+
+          <div id="google-wrap">
+            <div class="divider">or</div>
+            <button id="btn-google" class="btn btn-ghost" style="width:100%" type="button">Continue with Google</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CUSTOMER -->
+      <div id="view-customer" class="hidden">
+        <div class="portal-head">
+          <div><h1>Hi, <span id="who-name"></span></h1><div class="who" id="who-email"></div></div>
+          <button id="btn-to-admin" class="btn btn-outline btn-sm hidden" type="button">Open admin view</button>
+        </div>
+        <div class="portal-grid">
+          <div class="card">
+            <h2>New job request</h2>
+            <div id="job-msg" class="alert hidden" style="margin-bottom:14px"></div>
+            <form id="form-job" class="form-grid">
+              <div><label for="j-name">Contact name</label><input id="j-name" required /></div>
+              <div><label for="j-phone">Mobile number</label><input id="j-phone" type="tel" placeholder="09XX XXX XXXX" required /></div>
+              <div class="full"><label for="j-address">Service address</label><input id="j-address" placeholder="House/Unit no., Street, Barangay" required /></div>
+              <div><label for="j-city">City</label><input id="j-city" required /></div>
+              <div><label for="j-service">Service needed</label>
+                <select id="j-service" required>
+                  <option value="">Select…</option>
+                  <option>Aircon Cleaning</option>
+                  <option>Repair / Troubleshooting</option>
+                  <option>Installation</option>
+                  <option>Freon Recharge</option>
+                  <option>Relocation / Dismantling</option>
+                  <option>Refrigeration Repair</option>
+                  <option>Preventive Maintenance</option>
+                  <option>Inspection / Check-up</option>
+                </select>
+              </div>
+              <div><label for="j-unit">Unit type</label>
+                <select id="j-unit" required>
+                  <option value="">Select…</option>
+                  <option>Window type</option>
+                  <option>Split type</option>
+                  <option>Cassette / Ceiling</option>
+                  <option>Floor-mounted</option>
+                  <option>Refrigerator / Freezer</option>
+                  <option>Commercial / Other</option>
+                </select>
+              </div>
+              <div><label for="j-qty">No. of units</label><input id="j-qty" type="number" min="1" value="1" required /></div>
+              <div><label for="j-brand">Brand &amp; HP <span class="hint">(optional)</span></label><input id="j-brand" placeholder="e.g. Carrier 1.5HP" /></div>
+              <div><label for="j-date">Preferred date</label><input id="j-date" type="date" required /></div>
+              <div><label for="j-time">Preferred time</label>
+                <select id="j-time" required>
+                  <option>Morning (8AM–12NN)</option>
+                  <option>Afternoon (1PM–5PM)</option>
+                  <option>Anytime</option>
+                </select>
+              </div>
+              <div class="full"><label for="j-notes">Describe the problem / notes</label><textarea id="j-notes" placeholder="e.g. Not cooling, water dripping, unit is on the 2nd floor…"></textarea></div>
+              <div class="full"><button id="btn-submit-job" class="btn btn-primary" type="submit">Submit request</button></div>
+            </form>
+          </div>
+          <div class="card">
+            <h2>My requests</h2>
+            <div id="my-jobs"><div class="empty">No requests yet.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN -->
+      <div id="view-admin" class="hidden">
+        <div class="portal-head">
+          <div><h1>Kooltek Admin</h1><div class="who"><span id="admin-count">0</span> jobs total</div></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button id="btn-new-job" class="btn btn-primary btn-sm" type="button">+ New job (phone / walk-in)</button>
+            <button id="btn-to-customer" class="btn btn-outline btn-sm" type="button">My requests</button>
+          </div>
+        </div>
+
+        <div class="tabs" style="max-width:420px">
+          <button id="atab-jobs" class="active" type="button">Jobs</button>
+          <button id="atab-prices" type="button">Price list</button>
+        </div>
+
+        <div id="admin-jobs">
+          <div class="card" style="margin-bottom:16px;padding:16px 20px">
+            <div style="display:flex;gap:12px;align-items:end;flex-wrap:wrap">
+              <div><label for="f-date">Schedule date</label><input id="f-date" type="date" style="width:auto" /></div>
+              <button id="btn-clear-date" class="btn btn-ghost btn-sm" type="button">All dates</button>
+              <button id="btn-print-day" class="btn btn-outline btn-sm" type="button">🖨 Print day's Job Orders</button>
+              <div style="flex:1;min-width:180px"><label for="f-search">Search</label><input id="f-search" placeholder="Client, JO no., address…" /></div>
+            </div>
+          </div>
+          <div class="filters" id="admin-filters"></div>
+          <div id="all-jobs" class="card"><div class="empty">No job requests yet.</div></div>
+        </div>
+
+        <div id="admin-prices" class="card hidden">
+          <h2>Price list</h2>
+          <p class="hint" style="margin-top:-8px">Used to auto-fill unit prices on billing statements. Category is the left column on the statement (e.g. CLEANING, REPAIR).</p>
+          <div id="price-msg" class="alert hidden" style="margin-bottom:12px"></div>
+          <div style="overflow-x:auto">
+            <table class="tbl" id="price-table">
+              <thead><tr><th>Category</th><th>Item description</th><th style="width:140px">Unit price (₱)</th><th style="width:50px"></th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div style="display:flex;gap:12px;align-items:end;flex-wrap:wrap;margin-top:14px">
+            <button id="btn-add-price" class="btn btn-ghost btn-sm" type="button">+ Add item</button>
+            <div><label for="p-transpo">Default transpo fee (₱)</label><input id="p-transpo" type="number" min="0" step="1" style="width:140px" /></div>
+            <button id="btn-save-prices" class="btn btn-primary btn-sm" type="button">Save price list</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- JOB ORDER DIALOG -->
+  <dialog id="dlg-jo" class="dlg">
+    <form id="form-jo" method="dialog">
+      <h2>Issue Job Order</h2>
+      <p class="hint" id="jo-sub"></p>
+      <div class="form-grid">
+        <div><label for="jo-date">Date</label><input id="jo-date" type="date" required /></div>
+        <div><label for="jo-time">Time</label><input id="jo-time" type="time" required /></div>
+        <div class="full"><label for="jo-tech">Technician(s)</label><input id="jo-tech" placeholder="e.g. BILLY A./JYRON F." required /></div>
+        <div class="full"><label>Service requested</label>
+          <div class="checks">
+            <label><input type="checkbox" value="Check-up" name="jo-req" /> Check-up</label>
+            <label><input type="checkbox" value="Cleaning" name="jo-req" /> Cleaning (Warranty: 7 days)</label>
+            <label><input type="checkbox" value="Repair" name="jo-req" /> Repair (Warranty: 30 days)</label>
+          </div>
+        </div>
+        <div class="full"><label for="jo-addr">Address (as printed)</label><input id="jo-addr" required /></div>
+      </div>
+      <div class="dlg-actions">
+        <button type="button" class="btn btn-ghost btn-sm" data-close>Cancel</button>
+        <button type="submit" class="btn btn-primary btn-sm">Save &amp; print Job Order</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- COMPLETE & BILL DIALOG -->
+  <dialog id="dlg-bill" class="dlg dlg-wide">
+    <form id="form-bill" method="dialog">
+      <h2>Job report &amp; billing</h2>
+      <p class="hint" id="bill-sub"></p>
+      <h3 class="dlg-sec">Job report (from technician's Job Order)</h3>
+      <div class="form-grid">
+        <div class="full"><label for="r-findings">Findings</label><textarea id="r-findings" rows="2"></textarea></div>
+        <div class="full"><label for="r-done">Job done</label><textarea id="r-done" rows="2"></textarea></div>
+        <div class="full"><label for="r-rec">Recommendations</label><textarea id="r-rec" rows="2"></textarea></div>
+        <div><label for="r-type">Aircon type</label><input id="r-type" placeholder="e.g. Split type" /></div>
+        <div><label for="r-hp">INV / Non-INV &amp; HP</label><input id="r-hp" placeholder="e.g. INV 1.5HP" /></div>
+        <div><label for="r-brand">Brand</label><input id="r-brand" /></div>
+        <div><label for="r-model">Model</label><input id="r-model" /></div>
+        <div class="full"><label for="r-serial">Serial</label><input id="r-serial" /></div>
+      </div>
+      <h3 class="dlg-sec">Billing</h3>
+      <div style="overflow-x:auto">
+        <table class="tbl" id="bill-items">
+          <thead><tr><th style="min-width:170px">From price list</th><th>Category</th><th>Item description</th><th style="width:70px">Qty</th><th style="width:120px">Unit price</th><th style="width:110px;text-align:right">Total</th><th style="width:40px"></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <button type="button" id="btn-add-line" class="btn btn-ghost btn-sm" style="margin-top:10px">+ Add line</button>
+      <div class="bill-sum">
+        <div><label for="b-date">Billing date</label><input id="b-date" type="date" required style="width:auto" /></div>
+        <div><label for="b-transpo">Transpo fee (₱)</label><input id="b-transpo" type="number" min="0" step="1" style="width:120px" /></div>
+        <div class="bill-total">Total amount due: <strong id="b-total">₱0.00</strong></div>
+      </div>
+      <div id="bill-msg" class="alert hidden" style="margin-top:12px"></div>
+      <div class="dlg-actions">
+        <button type="button" class="btn btn-ghost btn-sm" data-close>Cancel</button>
+        <button type="button" id="btn-save-report" class="btn btn-outline btn-sm">Save report only</button>
+        <button type="submit" class="btn btn-primary btn-sm">Save &amp; generate Billing Statement</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- NEW JOB (ADMIN) DIALOG -->
+  <dialog id="dlg-new" class="dlg">
+    <form id="form-new" method="dialog">
+      <h2>New job (phone / walk-in)</h2>
+      <div class="form-grid">
+        <div class="full"><label for="n-name">Client name</label><input id="n-name" placeholder="e.g. MS. KRISTINA ONG" required /></div>
+        <div><label for="n-phone">Mobile number</label><input id="n-phone" type="tel" required /></div>
+        <div><label for="n-email">Email <span class="hint">(optional)</span></label><input id="n-email" type="email" /></div>
+        <div class="full"><label for="n-address">Address</label><input id="n-address" required /></div>
+        <div><label for="n-city">City</label><input id="n-city" required /></div>
+        <div><label for="n-service">Service</label>
+          <select id="n-service" required>
+            <option>Aircon Cleaning</option><option>Repair / Troubleshooting</option><option>Installation</option>
+            <option>Freon Recharge</option><option>Relocation / Dismantling</option><option>Refrigeration Repair</option>
+            <option>Preventive Maintenance</option><option>Inspection / Check-up</option>
+          </select>
+        </div>
+        <div><label for="n-unit">Unit type</label>
+          <select id="n-unit" required>
+            <option>Window type</option><option>Split type</option><option>Cassette / Ceiling</option>
+            <option>Floor-mounted</option><option>Refrigerator / Freezer</option><option>Commercial / Other</option>
+          </select>
+        </div>
+        <div><label for="n-qty">No. of units</label><input id="n-qty" type="number" min="1" value="1" required /></div>
+        <div><label for="n-date">Preferred date</label><input id="n-date" type="date" required /></div>
+        <div><label for="n-time">Preferred time</label>
+          <select id="n-time"><option>Morning (8AM–12NN)</option><option>Afternoon (1PM–5PM)</option><option>Anytime</option></select>
+        </div>
+        <div class="full"><label for="n-notes">Notes</label><textarea id="n-notes" rows="2"></textarea></div>
+      </div>
+      <div class="dlg-actions">
+        <button type="button" class="btn btn-ghost btn-sm" data-close>Cancel</button>
+        <button type="submit" class="btn btn-primary btn-sm">Add job</button>
+      </div>
+    </form>
+  </dialog>
+
+  <footer class="site-footer">
+    <div class="container"><div>© <span id="yr"></span> Kooltek</div><div><a href="index.html#contact">Need help? Contact us</a></div></div>
+  </footer>
+
+  <script type="module" src="js/portal.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+/* Printable Job Order + Billing Statement (A4) */
+@page { size: A4; margin: 10mm; }
+* { box-sizing: border-box; }
+body { margin: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #e9eef5; font-family: Calibri, "Carlito", "Segoe UI", Arial, sans-serif; color: #000; }
+.toolbar {
+  position: sticky; top: 0; z-index: 5; display: flex; gap: 10px; justify-content: center; align-items: center;
+  padding: 10px; background: #0b2545; color: #fff; font-family: system-ui, sans-serif; font-size: 14px; flex-wrap: wrap;
+}
+.toolbar button, .toolbar a { background: #1d6fd8; color: #fff; border: 0; padding: 8px 16px; border-radius: 999px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 14px; }
+.toolbar a.alt { background: transparent; border: 1px solid rgba(255,255,255,.5); }
+.sheet { width: 210mm; min-height: 297mm; margin: 16px auto; background: #fff; padding: 10mm; box-shadow: 0 4px 20px rgba(0,0,0,.12); }
+.msg { text-align: center; padding: 60px 20px; font-family: system-ui, sans-serif; color: #444; }
+@media print {
+  body { background: #fff; }
+  .toolbar { display: none; }
+  .sheet { margin: 0; box-shadow: none; padding: 0; width: auto; min-height: 0; page-break-after: always; }
+  .sheet:last-child { page-break-after: auto; }
+}
+
+/* ---- Job Order ---- */
+.jo { font-size: 9.5pt; }
+.jo-copy { height: 132mm; display: flex; flex-direction: column; overflow: hidden; }
+.jo-cut { border-top: 1px dashed #777; margin: 3mm 0 4mm; }
+.jo-head { display: flex; justify-content: space-between; align-items: flex-end; }
+.jo-head img { height: 10mm; }
+.jo-head .co { font-weight: 700; font-size: 8pt; line-height: 1.25; margin-top: 1mm; }
+.jo-head .co a { color: #1d6fd8; }
+.jo-no { background: #1d6fd8; color: #fff; font-weight: 700; font-size: 11pt; padding: 1mm 4mm; min-width: 75mm; text-align: center; }
+.jo-grid { display: grid; grid-template-columns: 1fr 0.78fr; border: 1px solid #000; flex: 1; }
+.jo-bar { background: #bfbfbf; font-weight: 700; text-align: center; border-bottom: 1px solid #000; font-size: 8.5pt; }
+.jo-left { border-right: 1px solid #000; display: flex; flex-direction: column; }
+.jo-right { display: flex; flex-direction: column; }
+.row { display: flex; border-bottom: 1px solid #000; min-height: 6mm; }
+.row > div { padding: 0.6mm 1.5mm; display: flex; align-items: center; }
+.lbl { font-weight: 700; width: 24mm; border-right: 1px solid #000; }
+.val { font-weight: 700; flex: 1; }
+.svc { display: grid; grid-template-columns: 14mm 9mm 30mm 20mm 1fr; border-bottom: 1px solid #000; }
+.svc > div { border-right: 1px solid #000; padding: 0.6mm 1.5mm; font-weight: 700; display: flex; align-items: center; }
+.svc > div:last-child { border-right: 0; }
+.svc .reqs { flex-direction: column; align-items: stretch; padding: 0; font-size: 8pt; }
+.svc .reqs span { border-bottom: 1px solid #000; padding: 0.2mm 1.5mm; }
+.svc .reqs span:last-child { border-bottom: 0; }
+.box { flex: 1; padding: 1.5mm; white-space: pre-wrap; font-size: 9pt; border-bottom: 1px solid #000; }
+.box:last-child { border-bottom: 0; }
+.chk { display: inline-block; width: 3mm; height: 3mm; border: 1px solid #000; margin-right: 1.5mm; vertical-align: -0.4mm; text-align: center; line-height: 2.6mm; font-size: 8pt; }
+.ac .row .lbl { width: 18mm; }
+.sig { flex: 1; display: flex; align-items: flex-end; justify-content: center; border-bottom: 1px solid #000; }
+.sig span { background: #bfbfbf; width: 100%; text-align: center; font-weight: 700; font-size: 8pt; border-top: 1px solid #000; }
+.thanks { text-align: center; font-weight: 700; font-size: 8pt; border-top: 1px solid #000; padding: 0.6mm; }
+.approved { margin: 1mm 0 0 18mm; font-size: 8.5pt; line-height: 1.2; }
+.approved .nm { margin-top: 5mm; text-decoration: underline; }
+.approved .t { font-style: italic; font-weight: 700; font-size: 8pt; }
+
+/* ---- Billing Statement ---- */
+.bs { font-size: 10.5pt; }
+.bs .oswald { font-family: "Oswald", "Arial Narrow", sans-serif; letter-spacing: .01em; }
+.bs-top { display: flex; justify-content: space-between; align-items: flex-end; }
+.bs-top .logo { height: 34mm; }
+.bs-top .co { font-family: "Montserrat", Arial, sans-serif; font-weight: 700; font-size: 10pt; line-height: 1.35; margin-top: 2mm; }
+.bs-top .co a { color: #1d6fd8; font-weight: 400; text-decoration: underline; }
+.bs-top .co small { display: block; font-size: 7.5pt; margin-top: 1.5mm; }
+.bs-title { text-align: center; color: #22b8f0; font-family: "Oswald", "Arial Narrow", sans-serif; font-weight: 700; font-size: 30pt; line-height: 1; margin-right: 6mm; }
+.bs-title .d { color: #0b2545; font-size: 10.5pt; margin-top: 3mm; font-weight: 600; }
+.bs-client { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 10mm; font-family: "Oswald", "Arial Narrow", sans-serif; font-weight: 600; font-size: 11pt; }
+.bs-client .due { display: flex; align-items: stretch; }
+.bs-client .due .l { white-space: nowrap; background: #69db7c; padding: 1mm 3mm; min-width: 44mm; }
+.bs-client .due .v { border: 1px solid #000; padding: 1mm 3mm; min-width: 28mm; text-align: right; font-family: Verdana, sans-serif; font-weight: 700; font-size: 10pt; }
+table.bs-items { width: 100%; border-collapse: collapse; margin-top: 8mm; font-size: 10pt; }
+.bs-items th { background: #5cc8f5; font-family: "Oswald", "Arial Narrow", sans-serif; font-weight: 500; border: 1px solid #000; padding: 1mm; }
+.bs-items td { border-left: 1px solid #000; border-right: 1px solid #000; border-bottom: 1px solid #000; padding: 0.8mm 2mm; height: 6mm; text-align: center; }
+.bs-items td.cat { vertical-align: top; padding-top: 1.5mm; }
+.bs-items td.num { text-align: center; }
+.bs-items td.tot { text-align: right; font-family: Verdana, sans-serif; font-weight: 700; }
+.bs-items .transpo td.lbl { color: #e03131; font-style: italic; }
+.bs-items .transpo td.tot { color: #e03131; }
+.bs-items .thanks-row td { font-family: "Oswald", "Arial Narrow", sans-serif; font-weight: 700; font-size: 8.5pt; text-transform: uppercase; }
+.bs-items .grand td { border: 0; }
+.bs-items .grand td.l { white-space: nowrap; background: #5cc8f5; font-family: "Oswald", "Arial Narrow", sans-serif; font-weight: 700; font-size: 12pt; text-align: left; border: 1px solid #000; }
+.bs-items .grand td.tot { background: #5cc8f5; border: 1px solid #000; font-size: 11pt; }
+.bs-pay { margin-top: 6mm; font-family: "Oswald", "Arial Narrow", sans-serif; font-weight: 700; }
+.bs-pay .h { color: #555; font-size: 9pt; margin-bottom: 3mm; }
+.bs-pay .acct { border: 1px solid #000; width: 66mm; padding: 1.5mm 2mm; margin-bottom: 6mm; line-height: 1.6; font-size: 11pt; }
+.bs-pay .acct .b { color: #1c4fd6; }
+.bs-ref { font-family: system-ui, sans-serif; font-size: 8pt; color: #666; margin-top: 4mm; }
+.paid-stamp { display: inline-block; border: 3px solid #2f9e44; color: #2f9e44; font-family: "Oswald", sans-serif; font-weight: 700; font-size: 16pt; padding: 1mm 5mm; transform: rotate(-6deg); margin-left: 10mm; }
+.pay-row .val { white-space: nowrap; font-size: 8pt; }
